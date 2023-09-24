@@ -1,0 +1,8 @@
+{
+  "id": "[plugin].com.pot-app.anki",
+  "plugin_type": "collection",
+  "icon": "anki.svg",
+  "display": "Anki",
+  "homepage": "https://github.com/pot-app/pot-app-collection-plugin-template",
+  "needs": [{ "key": "port", "display": "端口号" }]
+}
