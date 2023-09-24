@@ -5,6 +5,8 @@ use std::error::Error;
 #[no_mangle]
 pub fn collection(
     source: &str,
+    _target: &str,
+    from: &str,
     _to: &str,
     needs: HashMap<String, String>,
 ) -> Result<Value, Box<dyn Error>> {
@@ -17,7 +19,7 @@ pub fn collection(
     let res: Value = client
         .get("https://dict.youdao.com/wordbook/webapi/v2/ajax/add")
         .header("Cookie", cookie)
-        .query(&[("word", source), ("lan", "en")])
+        .query(&[("word", source), ("lan", from)])
         .send()?
         .json()?;
     if let Some(json) = res.as_object() {
@@ -41,7 +43,7 @@ mod tests {
     fn try_request() {
         let mut needs = HashMap::new();
         needs.insert("cookie".to_string(), "".to_string());
-        let result = collection("Hello", "en", needs).unwrap();
+        let result = collection("Hello", "", "en", "zh", needs).unwrap();
         println!("{result}");
     }
 }
