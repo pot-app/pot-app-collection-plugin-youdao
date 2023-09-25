@@ -28,12 +28,12 @@ pub fn collection(
                 return Ok(Value::Bool(true));
             } else {
                 if let Some(msg) = json.get("msg") {
-                    return Ok(Value::String(msg.as_str().unwrap().to_string()));
+                    return Err(msg.as_str().unwrap().into());
                 }
             }
         }
     }
-    Ok(Value::Bool(false))
+    Err("Unknown Error".into())
 }
 
 #[cfg(test)]
@@ -43,7 +43,7 @@ mod tests {
     fn try_request() {
         let mut needs = HashMap::new();
         needs.insert("cookie".to_string(), "".to_string());
-        let result = collection("Hello", "", "en", "zh", needs).unwrap();
-        println!("{result}");
+        let result = collection("Hello", "", "en", "zh", needs);
+        println!("{result:?}");
     }
 }
